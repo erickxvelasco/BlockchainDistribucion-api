@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -24,5 +23,12 @@ class RazaResource extends JsonResource
               'self'=>route('api.raza.show',$this->resource)
           ]
         ];
+    }
+    //sobreescribimos el metodo toResponse para añadir headers
+    public function toResponse($request)
+    {
+        return parent::toResponse($request)->withHeaders([
+           'location'=>route('api.raza.show',$this->resource)
+        ]);
     }
 }

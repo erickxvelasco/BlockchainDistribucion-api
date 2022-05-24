@@ -24,7 +24,9 @@ class StoreRazaRequest extends FormRequest
     public function rules()
     {
         return [
-            'raza'=>'required|min:5|max:100'
+            'data.attributes.raza'=>[
+                'required', 'min:3','max:50',"regex:/^[\pL\s\-]+$/u","unique:razas,raza"
+            ]
         ];
     }
 }

@@ -40,8 +40,11 @@ class RazaController extends Controller
      */
     public function store(StoreRazaRequest $request)//StoreRazaRequest
     {
-       $data= $request->validate();
-       return $data;
+        //dd($request->all());
+        $raza=Raza::create($request->validate()['data']['attributes']);
+
+       //$data= $request->validate();
+       return RazaResource::make($raza);
     }
 
     /**

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Origin;
+use Illuminate\Http\Request;
+use App\Http\Resources\OriginResource;
+use App\Http\Resources\OriginCollection;
 use App\Http\Requests\StoreOriginRequest;
 use App\Http\Requests\UpdateOriginRequest;
 
@@ -15,7 +18,8 @@ class OriginController extends Controller
      */
     public function index()
     {
-        //
+        $origins=Origin::all();
+        return OriginCollection::make($origins);
     }
 
     /**
@@ -34,9 +38,12 @@ class OriginController extends Controller
      * @param  \App\Http\Requests\StoreOriginRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreOriginRequest $request)
+    public function store(StoreOriginRequest $request) //StoreOriginRequest
     {
-        //
+       $origin=Origin::create($request->validate()['data']['attributes']);
+
+       //$data= $request->validate();
+       return OriginResource::make($origin);
     }
 
     /**
@@ -47,7 +54,7 @@ class OriginController extends Controller
      */
     public function show(Origin $origin)
     {
-        //
+        return OriginResource::make($origin);
     }
 
     /**
@@ -70,7 +77,10 @@ class OriginController extends Controller
      */
     public function update(UpdateOriginRequest $request, Origin $origin)
     {
-        //
+        $origin->update($request->validate()['data']['attributes']);
+
+        //$data= $request->validate();
+        return OriginResource::make($origin);
     }
 
     /**

@@ -1,9 +1,12 @@
 <?php
-
 namespace App\Exceptions;
 
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
+use Illuminate\Http\JsonResponse;
+
+use Illuminate\Validation\ValidationException;
+use App\Http\Responses\JsonApiValidationErrorResponse;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 
 class Handler extends ExceptionHandler
 {
@@ -46,5 +49,10 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+    }
+    //agregamos el metodo para devolver formato json:api
+    protected function invalidJson($request, ValidationException $exception): JsonApiValidationErrorResponse
+    {
+        return new JsonApiValidationErrorResponse($exception);
     }
 }
